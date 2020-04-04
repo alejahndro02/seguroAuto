@@ -4,6 +4,8 @@ const maxYear = new Date().getFullYear();
 const minYear = maxYear - 20;// 
 const yearSelect = document.getElementById('anio');
 const formulario = document.getElementById('cotizar-seguro')
+const div = document.createElement('div');
+
 //pinta los options dentro del contenedor con la clase anio
 for(let i = maxYear; i >= minYear; i-- ){
     let option= document.createElement('option');
@@ -30,14 +32,28 @@ formulario.addEventListener('submit', (e)=>{
         console.log('todo correcto');
         
     }
-    console.log(marcaSelect);
-    console.log(anioSelect);
-    console.log(check);
 })
 
 //Funciones
+//
 function Seguro (marca, anio, tipo){
     this.marca=marca;
     this.anio=anio;
     this.tipo=tipo;
+}
+
+function Interfaz(){}
+
+//Manda un msj de error cuando falta un campo por llenar en el fomrulario
+Interfaz.prototype.showError=function(mensaje,tipo){
+    if (tipo==='error'){
+        div.classList.add('mensaje', 'error');
+    }else{
+        div.classList.add('mensaje', 'correcto');
+    }
+    div.innerHTML=`${mensaje}`;
+    formulario.insertBefore(div, document.querySelector('.form-group'));
+    setTimeout(function(){
+        document.querySelector('.mensaje').remove();
+    },3000)
 }
